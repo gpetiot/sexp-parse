@@ -2,6 +2,8 @@
 
 (name sexp-parse)
 
+(using menhir 2.1)
+
 (generate_opam_files true)
 
 (authors "Guillaume Petiot <guillaume@tarides.com>")
@@ -19,5 +21,4 @@
    (and
     (>= 4.08)
     (< 4.14)))
-  (alcotest :with-test)
-  sexplib0))
+  (alcotest :with-test)))
