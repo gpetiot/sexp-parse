@@ -1,3 +1,4 @@
 (test
  (name tests)
+ (deps ocamlformat-dune-project)
  (libraries alcotest sexp-parse))
