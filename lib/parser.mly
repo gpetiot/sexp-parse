@@ -12,26 +12,26 @@
 %token <float> FLOAT "1.234"
 
 %start sexp_list
-%type <Sexp_intf.t list> sexp_list
+%type <Sexp.t list> sexp_list
 
 %%
 
 atom:
   | x = SYMBOL
-    { Sexp_intf.Symbol x }
+    { Sexp.Symbol x }
   | x = STRING
-    { Sexp_intf.String x }
+    { Sexp.String x }
   | x = INT
-    { Sexp_intf.Int x }
+    { Sexp.Int x }
   | x = FLOAT
-    { Sexp_intf.Float x }
+    { Sexp.Float x }
 ;
 
 sexp:
   | LPAREN s = sexp+ RPAREN
-    { Sexp_intf.List s }
+    { Sexp.List s }
   | a = atom
-    { Sexp_intf.Atom a }
+    { Sexp.Atom a }
 ;
 
 sexp_list:

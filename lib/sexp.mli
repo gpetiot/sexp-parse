@@ -1,7 +1,5 @@
-include module type of Sexp_intf
+type atom = Symbol of string | String of string | Int of int | Float of float
+
+type t = List of t list | Atom of atom
 
 val pp : Format.formatter -> t -> unit
-
-val of_lexbuf : Lexing.lexbuf -> (t list, [ `Msg of string ]) result
-
-val of_string : string -> (t list, [ `Msg of string ]) result
