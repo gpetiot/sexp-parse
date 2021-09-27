@@ -27,7 +27,32 @@ let test_of_string =
 ((data "quoted data" 123 4.5)
  (data (!@# (4.5) "(more" "data)")))
 |}
-      ~expected:(Ok []);
+      ~expected:
+        (Ok
+           Sexp_parse.Sexp.
+             [
+               List
+                 [
+                   List
+                     [
+                       Atom (Symbol "data");
+                       Atom (String {|quoted data|});
+                       Atom (Int 123);
+                       Atom (Float 4.5);
+                     ];
+                   List
+                     [
+                       Atom (Symbol "data");
+                       List
+                         [
+                           Atom (Symbol "!@#");
+                           List [ Atom (Float 4.5) ];
+                           Atom (String "(more");
+                           Atom (String "data)");
+                         ];
+                     ];
+                 ];
+             ]);
   ]
 
 let suite = ("Sexp", test_of_lexbuf @ test_of_string)

@@ -26,6 +26,6 @@ and eq_sexp_list x y =
   | _ -> false
 
 let sexp =
-  let pp = Sexp_parse.Sexp.pp in
+  let pp = Sexp_parse.Sexp.dump in
   let eq = eq_sexp in
   Alcotest.testable pp eq
