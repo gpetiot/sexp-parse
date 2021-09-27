@@ -25,3 +25,13 @@ let rec dump fs = function
   | List x ->
       Format.fprintf fs "@[<hv 2>(%a)@]" (Format.pp_print_list dump ~pp_sep) x
   | Atom x -> dump_atom fs x
+
+let atom_to_string = function
+  | Symbol x -> x
+  | String x -> Format.sprintf "%S" x
+  | Int x -> Int.to_string x
+  | Float x -> Float.to_string x
+
+let rec to_sexplib0 = function
+  | List x -> Sexplib0.Sexp.List (List.map to_sexplib0 x)
+  | Atom x -> Sexplib0.Sexp.Atom (atom_to_string x)

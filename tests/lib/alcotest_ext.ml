@@ -29,3 +29,8 @@ let sexp =
   let pp = Sexp_parse.Sexp.dump in
   let eq = eq_sexp in
   Alcotest.testable pp eq
+
+let sexp0 =
+  let pp = Sexplib0.Sexp.pp_hum in
+  let eq = Sexplib0.Sexp.equal in
+  Alcotest.testable pp eq
