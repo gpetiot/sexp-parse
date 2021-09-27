@@ -128,9 +128,12 @@ let update_loc (lexbuf : Lexing.lexbuf) file line absolute chars =
     pos_bol = pos.pos_cnum - chars;
   }
 
+let escaped_newlines = ref false
+
 }
 
 let newline = ('\013'* '\010')
+let blank = [' ' '\009' '\012']
 let lowercase = ['a'-'z' '_']
 let identchar = ['A'-'Z' 'a'-'z' '_' '\'' '0'-'9']
 let lowercase_latin1 = ['a'-'z' '\223'-'\246' '\248'-'\255' '_']
@@ -162,6 +165,15 @@ let hex_float_literal =
   (['p' 'P'] ['+' '-']? ['0'-'9'] ['0'-'9' '_']* )?
 
 rule token = parse
+  | ('\\' as bs) newline {
+      if not !escaped_newlines then error lexbuf (Illegal_character bs);
+      update_loc lexbuf None 1 false 0;
+      token lexbuf }
+  | newline
+      { update_loc lexbuf None 1 false 0;
+        token lexbuf }
+  | blank +
+      { token lexbuf }
   | eof { EOF }
   | "(" { LPAREN }
   | ")" { RPAREN }
