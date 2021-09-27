@@ -1,0 +1,23 @@
+(library
+ (name sexp_parse)
+ (public_name sexp-parse)
+ (libraries compiler-libs.common menhirLib))
+
+(ocamllex lexer)
+
+(menhir
+ (infer false)
+ (flags
+  --lalr
+  --explain
+  --dump
+  --strict
+  -lg
+  1
+  -la
+  1
+  --fixed-exception
+  --table
+  --strategy
+  simplified)
+ (modules parser))
