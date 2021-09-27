@@ -1,14 +1,17 @@
 let test_of_lexbuf =
-  let _make_test ~name ~lexbuf ~expected =
-    let name = "of_lexbuf " ^ name in
+  let make_test ~file ~expected =
+    let name = "of_lexbuf " ^ file in
     let test_fun () =
+      let ic = open_in file in
+      let lx = Lexing.from_channel ic in
+      close_in ic ;
       Alcotest.(check (Alcotest_ext.result_msg (list Alcotest_ext.sexp)))
         name expected
-        (Sexp_parse.of_lexbuf lexbuf)
+        (Sexp_parse.of_lexbuf lx)
     in
     (name, `Quick, test_fun)
   in
-  []
+  [ make_test ~file:"ocamlformat-dune-project" ~expected:(Ok []) ]
 
 let test_of_string =
   let make_test ~name ~input ~expected =
