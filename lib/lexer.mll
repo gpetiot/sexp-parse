@@ -134,13 +134,10 @@ let escaped_newlines = ref false
 
 let newline = ('\013'* '\010')
 let blank = [' ' '\009' '\012']
-let lowercase = ['a'-'z' '_']
 let identchar = ['A'-'Z' 'a'-'z' '_' '\'' '0'-'9']
-let lowercase_latin1 = ['a'-'z' '\223'-'\246' '\248'-'\255' '_']
 let identchar_latin1 =
-  ['A'-'Z' 'a'-'z' '_' '\192'-'\214' '\216'-'\246' '\248'-'\255' '\'' '0'-'9']
-let hex_digit =
-  ['0'-'9' 'A'-'F' 'a'-'f']
+  ['A'-'Z' 'a'-'z' '_' '\192'-'\214' '\216'-'\246' '\248'-'\255' '\'' '0'-'9'
+   '!' '$' '%' '&' '*' '+' '-' '.' '/' ':' '<' '=' '>' '?' '@' '^' '|' '~' '#']
 
 let decimal_literal =
   ['0'-'9'] ['0'-'9' '_']*
@@ -185,9 +182,7 @@ rule token = parse
       { FLOAT (float_of_string lit) }
   | (float_literal | hex_float_literal | int_literal) identchar+ as invalid
       { error lexbuf (Invalid_literal invalid) }
-  | lowercase identchar * as name
-      { SYMBOL name }
-  | lowercase_latin1 identchar_latin1 * as name
+  | identchar_latin1+ as name
       { SYMBOL name }
   | (_ as illegal_char)
       { error lexbuf (Illegal_character illegal_char) }

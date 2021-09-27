@@ -8,7 +8,9 @@ let pp_atom fs = function
   | Int x -> Format.fprintf fs "%i" x
   | Float x -> Format.fprintf fs "%f" x
 
+let pp_sep fs () = Format.fprintf fs "@ "
+
 let rec pp fs = function
   | List x ->
-      Format.pp_print_list pp fs x ~pp_sep:(fun fs () -> Format.fprintf fs "@ ")
+      Format.fprintf fs "@[<hv 2>(%a)@]" (Format.pp_print_list pp ~pp_sep) x
   | Atom x -> pp_atom fs x

@@ -5,7 +5,7 @@ let of_lexbuf lx =
   | exception Lexer.Error (err, loc) ->
       Error
         (`Msg
-          (Format.asprintf "%a%a" Location.print_loc loc Lexer.pp_error err))
+          (Format.asprintf "%a: %a" Location.print_loc loc Lexer.pp_error err))
   | exception Parser.Error ->
       let pos = lx.lex_curr_p in
       Error
