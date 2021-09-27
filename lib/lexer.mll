@@ -161,6 +161,9 @@ let hex_float_literal =
   ('.' ['0'-'9' 'A'-'F' 'a'-'f' '_']* )?
   (['p' 'P'] ['+' '-']? ['0'-'9'] ['0'-'9' '_']* )?
 
+let comment =
+  ';' [^ '\013' '\010']* newline
+
 rule token = parse
   | ('\\' as bs) newline {
       if not !escaped_newlines then error lexbuf (Illegal_character bs);
@@ -170,6 +173,8 @@ rule token = parse
       { update_loc lexbuf None 1 false 0;
         token lexbuf }
   | blank +
+      { token lexbuf }
+  | comment
       { token lexbuf }
   | eof { EOF }
   | "(" { LPAREN }
