@@ -1,4 +1,4 @@
-include module type of Sexp
+module Sexp = Sexp
 
 val of_lexbuf : Lexing.lexbuf -> (Sexp.t list, [ `Msg of string ]) result
 

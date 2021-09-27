@@ -1,4 +1,4 @@
-include Sexp
+module Sexp = Sexp
 
 let of_lexbuf lx =
   match Parser.sexp_list Lexer.token lx with
