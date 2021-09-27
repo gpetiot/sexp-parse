@@ -250,4 +250,56 @@ let test_of_string =
              ]);
   ]
 
-let suite = ("Sexp", test_of_lexbuf @ test_of_string)
+let test_to_sexplib0 =
+  let make_test ~name ~input ~expected =
+    let name = "to_sexplib0 " ^ name in
+    let test_fun () =
+      Alcotest.check Alcotest_ext.sexp0 name expected
+        (Sexp_parse.Sexp.to_sexplib0 input)
+    in
+    (name, `Quick, test_fun)
+  in
+  [
+    make_test ~name:"rosettacode example"
+      ~input:
+        (Sexp_parse.Sexp.List
+           [
+             List
+               [
+                 Atom (Symbol "data");
+                 Atom (String {|quoted data|});
+                 Atom (Int 123);
+                 Atom (Float 4.5);
+               ];
+             List
+               [
+                 Atom (Symbol "data");
+                 List
+                   [
+                     Atom (Symbol "!@#");
+                     List [ Atom (Float 4.5) ];
+                     Atom (String "(more");
+                     Atom (String "data)");
+                   ];
+               ];
+           ])
+      ~expected:
+        (Sexplib0.Sexp.List
+           [
+             List
+               [ Atom "data"; Atom {|"quoted data"|}; Atom "123"; Atom "4.5" ];
+             List
+               [
+                 Atom "data";
+                 List
+                   [
+                     Atom "!@#";
+                     List [ Atom "4.5" ];
+                     Atom {|"(more"|};
+                     Atom {|"data)"|};
+                   ];
+               ];
+           ]);
+  ]
+
+let suite = ("Sexp", test_of_lexbuf @ test_of_string @ test_to_sexplib0)

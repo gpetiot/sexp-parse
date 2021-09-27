@@ -21,4 +21,5 @@
    (and
     (>= 4.08)
     (< 4.14)))
-  (alcotest :with-test)))
+  (alcotest :with-test)
+  sexplib0))

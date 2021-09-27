@@ -1,7 +1,7 @@
 (library
  (name sexp_parse)
  (public_name sexp-parse)
- (libraries compiler-libs.common menhirLib))
+ (libraries compiler-libs.common menhirLib sexplib0))
 
 (ocamllex lexer)
 

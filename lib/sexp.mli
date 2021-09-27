@@ -5,3 +5,5 @@ type t = List of t list | Atom of atom
 val dump : Format.formatter -> t -> unit
 
 val pp : Format.formatter -> t -> unit
+
+val to_sexplib0 : t -> Sexplib0.Sexp.t
