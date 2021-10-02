@@ -2,6 +2,28 @@ type atom = Symbol of string | String of string | Int of int | Float of float
 
 type t = List of t list | Atom of atom
 
+let eq_atom x y =
+  match (x, y) with
+  | Symbol x, Symbol y -> String.equal x y
+  | String x, String y -> String.equal x y
+  | Int x, Int y -> Int.equal x y
+  | Float x, Float y -> Float.equal x y
+  | _ -> false
+
+let rec eq_sexp x y =
+  match (x, y) with
+  | Atom x, Atom y -> eq_atom x y
+  | List x, List y -> eq_sexp_list x y
+  | _ -> false
+
+and eq_sexp_list x y =
+  match (x, y) with
+  | [], [] -> true
+  | a :: b, c :: d -> eq_sexp a c && eq_sexp_list b d
+  | _ -> false
+
+let equal = eq_sexp
+
 let pp_atom fs = function
   | Symbol x -> Format.fprintf fs "%s" x
   | String x -> Format.fprintf fs "%S" x
