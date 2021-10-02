@@ -9,6 +9,8 @@ depends: [
   "dune" {>= "2.8"}
   "ocaml" {>= "4.08" & < "4.14"}
   "alcotest" {with-test}
+  "menhir"
+  "menhirLib"
   "sexplib0"
   "odoc" {with-doc}
 ]
