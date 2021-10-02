@@ -3,7 +3,7 @@
  (public_name sexp-parse)
  (libraries compiler-libs.common menhirLib sexplib0))
 
-(ocamllex lexer)
+(ocamllex sexp_lexer)
 
 (menhir
  (infer false)
@@ -20,4 +20,4 @@
   --table
   --strategy
   simplified)
- (modules parser))
+ (modules sexp_parser))
