@@ -5,6 +5,8 @@
 
 (ocamllex sexp_lexer)
 
+(ocamllex sexp0_lexer)
+
 (menhir
  (infer false)
  (flags
@@ -21,3 +23,20 @@
   --strategy
   simplified)
  (modules sexp_parser))
+
+(menhir
+ (infer false)
+ (flags
+  --lalr
+  --explain
+  --dump
+  --strict
+  -lg
+  1
+  -la
+  1
+  --fixed-exception
+  --table
+  --strategy
+  simplified)
+ (modules sexp0_parser))

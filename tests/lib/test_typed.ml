@@ -303,4 +303,4 @@ let test_to_sexplib0 =
            ]);
   ]
 
-let suite = ("Sexp", test_of_lexbuf @ test_of_string @ test_to_sexplib0)
+let suite = ("Typed", test_of_lexbuf @ test_of_string @ test_to_sexplib0)
