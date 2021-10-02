@@ -5,7 +5,7 @@ let error_msg =
 
 let result_msg testable = Alcotest.result testable error_msg
 
-let eq_atom (x : Sexp_parse.Sexp.atom) (y : Sexp_parse.Sexp.atom) =
+let eq_atom (x : Sexp_parse.Typed.atom) (y : Sexp_parse.Typed.atom) =
   match (x, y) with
   | Symbol x, Symbol y -> String.equal x y
   | String x, String y -> String.equal x y
@@ -13,7 +13,7 @@ let eq_atom (x : Sexp_parse.Sexp.atom) (y : Sexp_parse.Sexp.atom) =
   | Float x, Float y -> Float.equal x y
   | _ -> false
 
-let rec eq_sexp (x : Sexp_parse.Sexp.t) (y : Sexp_parse.Sexp.t) =
+let rec eq_sexp (x : Sexp_parse.Typed.t) (y : Sexp_parse.Typed.t) =
   match (x, y) with
   | Atom x, Atom y -> eq_atom x y
   | List x, List y -> eq_sexp_list x y
@@ -26,7 +26,7 @@ and eq_sexp_list x y =
   | _ -> false
 
 let sexp =
-  let pp = Sexp_parse.Sexp.dump in
+  let pp = Sexp_parse.Typed.dump in
   let eq = eq_sexp in
   Alcotest.testable pp eq
 

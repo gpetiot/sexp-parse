@@ -1,5 +1,5 @@
 let ocamlformat_package =
-  let open Sexp_parse.Sexp in
+  let open Sexp_parse.Typed in
   List
     [
       Atom (Symbol "package");
@@ -106,7 +106,7 @@ let ocamlformat_package =
     ]
 
 let ocamlformat_rpc_lib_package =
-  let open Sexp_parse.Sexp in
+  let open Sexp_parse.Typed in
   List
     [
       Atom (Symbol "package");
@@ -152,7 +152,8 @@ let test_of_lexbuf =
       let lx = Lexing.from_channel ic in
       let result =
         Alcotest.(check (Alcotest_ext.result_msg (list Alcotest_ext.sexp)))
-          name expected (Sexp_parse.of_lexbuf lx)
+          name expected
+          (Sexp_parse.Typed.of_lexbuf lx)
       in
       close_in ic;
       result
@@ -163,7 +164,7 @@ let test_of_lexbuf =
     make_test ~file:"ocamlformat-dune-project"
       ~expected:
         (Ok
-           Sexp_parse.Sexp.
+           Sexp_parse.Typed.
              [
                List
                  [
@@ -211,7 +212,7 @@ let test_of_string =
     let test_fun () =
       Alcotest.(check (Alcotest_ext.result_msg (list Alcotest_ext.sexp)))
         name expected
-        (Sexp_parse.of_string input)
+        (Sexp_parse.Typed.of_string input)
     in
     (name, `Quick, test_fun)
   in
@@ -224,7 +225,7 @@ let test_of_string =
 |}
       ~expected:
         (Ok
-           Sexp_parse.Sexp.
+           Sexp_parse.Typed.
              [
                List
                  [
@@ -255,14 +256,14 @@ let test_to_sexplib0 =
     let name = "to_sexplib0 " ^ name in
     let test_fun () =
       Alcotest.check Alcotest_ext.sexp0 name expected
-        (Sexp_parse.Sexp.to_sexplib0 input)
+        (Sexp_parse.Typed.to_sexplib0 input)
     in
     (name, `Quick, test_fun)
   in
   [
     make_test ~name:"rosettacode example"
       ~input:
-        (Sexp_parse.Sexp.List
+        (Sexp_parse.Typed.List
            [
              List
                [
@@ -302,4 +303,4 @@ let test_to_sexplib0 =
            ]);
   ]
 
-let suite = ("Sexp", test_of_lexbuf @ test_of_string @ test_to_sexplib0)
+let suite = ("Typed", test_of_lexbuf @ test_of_string @ test_to_sexplib0)
