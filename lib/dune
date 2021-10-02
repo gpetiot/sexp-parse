@@ -10,14 +10,9 @@
 (menhir
  (infer false)
  (flags
+  :standard
   --lalr
-  --explain
-  --dump
   --strict
-  -lg
-  1
-  -la
-  1
   --fixed-exception
   --table
   --strategy
@@ -27,14 +22,9 @@
 (menhir
  (infer false)
  (flags
+  :standard
   --lalr
-  --explain
-  --dump
   --strict
-  -lg
-  1
-  -la
-  1
   --fixed-exception
   --table
   --strategy
