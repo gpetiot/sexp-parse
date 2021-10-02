@@ -22,5 +22,6 @@
     (>= 4.08)
     (< 4.14)))
   (alcotest :with-test)
+  menhir
   menhirLib
   sexplib0))
